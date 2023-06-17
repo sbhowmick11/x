@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Price calculator</title>
+</head>
+<body>
+    Enter Item Name:&nbsp;<input type="text" id="1"><br><br><br>
+    Enter Quantity:&nbsp;<input type="text" id="2"><br><br><br>
+    Enter Item Rate:&nbsp;<input type="text" id="3"><br><br><br>
+    <button onclick=fun()>TOTAL RATE</button><br><br><br>
+    Total Amount:&nbsp;<input type="text" id="4"><br><br><br>
+</body>
+<table id="2">
+    <tr>
+<th>C</th><th>C++</th><th>Java</th></tr>
+<tr>
+    <!--<td>
+<pre>
+ void reverseArray(int *arr, int m, int n)
+ {
+    int size;
+    size = n;
+    int i = 0;
+    int j = size - 1;
+    while (i &lt; j)
+    {
+        int t;
+        t = arr[i];
+        arr[i] = arr[j];
+        arr[j] = t;
+        i++;
+        j--;
+    }
+ }
+</pre>
+    
+</td>-->
+    <td>
+        <div class="col border border-dark">
+<pre>
+ #include &lt;bits/stdc++.h&gt;
+ void reverseArray(vector&lt;int&gt;& arr, int m)
+ {
+    int a = arr.size();
+    int i = m+1;
+    int j = a - 1;
+    while (i &lt; j) 
+    {
+        int t;
+        t = arr[i];
+        arr[i] = arr[j];
+        arr[j] = t;
+        i++;
+        j--;
+    }
+ }
+</pre>
+          </div>
+          
+    </td>
+    <td>
+<pre> import java.util.*;
+ import java.io.*;
+ import java.util.ArrayList;
+ public class Solution 
+ {
+  public static void reverseArray(ArrayList&lt;Integer&gt; arr,int m)
+    {
+        int a = arr.size();
+        int i=m+1;int j=a-1;
+        while(i&lt;j)
+        {
+            int temp = arr.get(i);
+            arr.set(i, arr.get(j));
+            arr.set(j, temp);
+            i++;j--;
+        }
+                
+    }
+}
+</pre>
+        
+    </td></tr>
+</table>
+<style>
+    table, th, td {
+  border: 2px solid black;
+  border-collapse: collapse;
+  margin: 0 auto;
+}
+pre{
+    
+    font-family: cursive;
+}
+</style>
+<script src="x.js"></script>
+</html>
