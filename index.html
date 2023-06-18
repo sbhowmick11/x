@@ -54,67 +54,66 @@
       <div class="y">
         <div class="a">
         <h4>&nbsp;<u>C:</u></h4>
-        <pre>
-        #include<stdio.h>
-         void reverseArray(int *arr, int m, int n)
-         {
-            int a;
-            size = a;
-            int i = m+1;
-            int j = a - 1;
-            while (i &lt; j)
-            {
-                int t;
-                t = arr[i];
-                arr[i] = arr[j];
-                arr[j] = t;
-                i++;
-                j--;
-            }
-         }
-        </pre>
+<pre>
+#include<stdio.h>
+void reverseArray(int *arr, int m, int n)
+{
+  int a;
+  size = a;
+  int i = m+1;
+  int j = a - 1;
+  while (i &lt; j)
+  {
+    int t;
+    t = arr[i];
+    arr[i] = arr[j];
+    arr[j] = t;
+    i++;
+    j--;
+  }
+}</pre>
         </div>
             
         <div class="a">
             <h4>&nbsp;<u>C++:</u></h4>
-        <pre>
-         #include &lt;bits/stdc++.h&gt;
-         void reverseArray(vector&lt;int&gt;& arr, int m)
-         {
-            int a = arr.size();
-            int i = m+1;
-            int j = a - 1;
-            while (i &lt; j) 
-            {
-                int t;
-                t = arr[i];
-                arr[i] = arr[j];
-                arr[j] = t;
-                i++;
-                j--;
-            }
-         }
-        </pre>
+<pre>
+#include &lt;bits/stdc++.h&gt;
+void reverseArray(vector&lt;int&gt;& arr, int m)
+{
+  int a = arr.size();
+  int i = m+1;
+  int j = a - 1;
+  while (i &lt; j) 
+  {
+    int t;
+    t = arr[i];
+    arr[i] = arr[j];
+    arr[j] = t;
+    i++;
+    j--;
+  }
+}</pre>
         </div>
         <div class="a">
             <h4>&nbsp;<u>JAVA:</u></h4>
-        <pre> import java.util.*;
-         import java.io.*;
-         import java.util.ArrayList;
-         public class Solution 
-         {
-         public static void reverseArray(ArrayList&lt;Integer&gt; arr,int m)
-           {
-                int a = arr.size();  int i=m+1;  int j=a-1;
-                while(i&lt;j)
-                {
-                    int temp = arr.get(i);
-                    arr.set(i, arr.get(j));
-                    arr.set(j, temp);  i++;  j--;
-                }
+<pre> 
+import java.util.*;
+import java.io.*;
+import java.util.ArrayList;
+public class Solution 
+{
+  public static void reverseArray(ArrayList&lt;Integer&gt; arr,int m)
+  {
+    int a = arr.size();  int i=m+1;  int j=a-1;
+    while(i&lt;j)
+    {
+      int temp = arr.get(i);
+      arr.set(i, arr.get(j));
+      arr.set(j, temp);  i++;  j--;
+    }
                         
-            }
-        }
+  }
+}
         </pre>
         </div></div>
         <div style="padding-top: 15px" class="container">
@@ -171,6 +170,14 @@ This logic can be applied to vectors or array-like structures in any programming
       font-family:Roboto;
       font-size:2.5vh;
   }
+  @media (max-width:450px) {
+    pre
+    {
+      font-size:1.5vh;
+    }
+    
+  }
+
       .y
       {
           display:flex;
@@ -181,16 +188,8 @@ This logic can be applied to vectors or array-like structures in any programming
       .a
       {
           border:2px solid black;
-          padding:1vh;
-        
+          padding: 1vh;
       }
-        @media (max-width:450 px) {
-    pre
-    {
-      font-size:0.5 vh;
-    }
-    
-  }
      #po
      {
      
