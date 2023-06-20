@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>REVERSE AN ARRAY</title>
+    <title>HEAP SORT</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
 <body>
@@ -48,101 +48,241 @@
       </nav>
     
       <div id="z" style="padding-top: 15px" class="container">
-      <div class="l"><b><u>Problem Statement:</u></b></div>
-        <h6>Given an arraylist/vector 'arr' of integers and a position 'm'.You have to reverse the array after that position.</h6>
+        <div class="l" ><b><u>Problem Statement:</u></b> </div>
+         <h6>You are given a unsorted array. You must sort the array using heap sort algorithm with a time
+            complexity of O(nlogn).
+         </h6>
       </div>
       <div class="y">
         <div class="a">
         <h4>&nbsp;<u>C:</u></h4>
 <pre>
-#include<stdio.h>
-void reverseArray(int *arr, int m, int n)
+#include &lt;stdio.h&gt;
+//<i>To heapify a subtree rooted with</i> 
+//<i>node i which is an index in arr[].</i>
+//<i>N is size of the heap</i>
+void heapify(int arr[], int N, int i)
 {
-  int a;
-  size = a;
-  int i = m+1;
-  int j = a - 1;
-  while (i &lt; j)
-  {
-    int t;
-    t = arr[i];
-    arr[i] = arr[j];
-    arr[j] = t;
-    i++;
-    j--;
-  }
+    //<i>Initialize largest as root</i>
+    int largest = i;
+    //<i>left = 2*i +1</i>
+    int l = 2 * i + 1;
+    //<i>right = 2*i+2</i>
+    int r = 2 * i + 2;
+    //<i>If left child is larger than root</i>
+    if (l &lt; N && arr[l] > arr[largest])
+        largest = l;
+    //<i>If right child is larger</i> 
+    //<i>than largest so far</i>
+    if (r &lt; N && arr[r] > arr[largest])
+        largest = r;
+    //<i>If largest is not root</i>
+    if (largest != i)
+    {
+        int temp = arr[i];
+        arr[i] = arr[largest];
+        arr[largest] = temp;
+        //<i>Recursively heapify the</i> 
+        //<i>affected sub-tree</i>
+        heapify(arr, N, largest);
+    }
+}
+//<i>Main function to do heap sort</i>
+void heapSort(int arr[], int N)
+{
+    //<i>Build heap (rearrange array)</i>
+    for (int i = N / 2 - 1; i >= 0; i--)
+        heapify(arr, N, i);
+    //<i>One by one extract an element</i> 
+    //<i>from heap</i>
+    for (int i = N - 1; i > 0; i--)
+    {
+        //<i>Move current root to end</i>
+        int temp = arr[0];
+        arr[0] = arr[i];
+        arr[i] = temp;
+        //<i>call max heapify on the</i> 
+        //<i>reduced heap</i>
+        heapify(arr, i, 0);
+    }
+}
+//<i>A utility function to print array of size n</i>
+void printArray(int arr[], int N)
+{
+    for (int i = 0; i < N; ++i)
+        printf("%d ", arr[i]);
+    printf("\n");
+}
+//<i>Driver's code</i>
+int main()
+{
+    int arr[] = { 12, 11, 13, 5, 6, 7 };
+    int N = sizeof(arr) / sizeof(arr[0]);
+    // Function call
+    heapSort(arr, N);
+    printf("Sorted array is:\n");
+    printArray(arr, N);
 }</pre>
         </div>
             
         <div class="a">
             <h4>&nbsp;<u>C++:</u></h4>
 <pre>
-#include &lt;bits/stdc++.h&gt;
-void reverseArray(vector&lt;int&gt;& arr, int m)
+#include &lt;iostream&gt;
+using namespace std;
+
+void heapify(int arr[], int N, int i)
 {
-  int a = arr.size();
-  int i = m+1;
-  int j = a - 1;
-  while (i &lt; j) 
-  {
-    int t;
-    t = arr[i];
-    arr[i] = arr[j];
-    arr[j] = t;
-    i++;
-    j--;
-  }
+    //<i>Initialize largest as root</i>
+    int largest = i;
+    //<i>left = 2*i +1</i>
+    int l = 2 * i+1;
+    //<i>right = 2*i+2</i>
+    int r = 2 * i + 2;
+    
+    //<i>If left child is larger than root</i>
+    if (l &lt; N && arr[l] > arr[largest])
+        largest = l;
+    
+    //<i>If right child is larger than largest</i>
+    //<i>so far</i>
+    if (r < N && arr[r] > arr[largest])
+        largest = r;
+    
+    //<i>If largest is not root</i>
+    if (largest != i) {
+        swap(arr[i], arr[largest]);
+    
+    //<i>Recursively heapify the affected</i>
+    //<i>sub-tree</i>
+    heapify(arr, N, largest);
+    }
+}
+//<i>Main function to do heap sort</i>
+void heapSort(int arr[], int N)
+{    
+    <i>// Build heap (rearrange array)</i>
+    for (int i = N / 2 - 1; i >= 0; i--)
+    heapify(arr, N, i);
+    
+    //<i>One by one extract element from heap</i>
+    for (int i = N - 1; i > 0; i--) 
+    {
+        //<i>Move current root to end</i>
+        swap(arr[0], arr[i]);
+        
+        //<i>call max heapify on the reduced heap</i>
+        
+        heapify(arr, i, 0);
+    }
+}
+//<i>A utility function to print array of size n</i>
+void printArray(int arr[], int N)
+{
+    for (int i = 0; i &lt; N; ++i)
+        cout << arr[i] << " ";
+    cout << "\n";
+}
+//<i>Driver's code</i>
+int main()
+{
+    int arr[] = { 12, 11, 13, 5, 6, 7 };
+    int N = sizeof(arr) / sizeof(arr[0]);
+    //<i>Function call</i>
+    heapSort(arr, N);
+    cout << "Sorted array is \n";
+    printArray(arr, N);
 }</pre>
         </div>
         <div class="a">
             <h4>&nbsp;<u>JAVA:</u></h4>
-<pre> 
-import java.util.*;
-import java.io.*;
-import java.util.ArrayList;
-public class Solution 
+<pre>import java.util.Arrays;
+public class HeapSort 
 {
-  public static void reverseArray(ArrayList
-  &lt;Integer&gt; arr,int m)
-  {
-    int a = arr.size();  int i=m+1;  int j=a-1;
-    while(i&lt;j)
-    {
-      int temp = arr.get(i);
-      arr.set(i, arr.get(j));
-      arr.set(j, temp);  i++;  j--;
+    //<i>To heapify a subtree rooted with node i</i>
+    //<i>which is an index in arr[].</i>
+    //<i>N is size of heap</i>
+   public static void heapify(int arr[], int N, int i) 
+   {
+        int largest = i;//<i>Initialize largest as root</i>
+        int l = 2 * i + 1; //<i>left = 2*i + 1</i>
+        int r = 2 * i + 2;//<i>right = 2*i + 2</i>
+        //<i>If left child is larger than root</i>
+         if (l &lt; N && arr[l] > arr[largest])
+            largest = l;
+        //<i>If right child is larger than largest so far</i>
+        if (r &lt; N && arr[r] > arr[largest])
+            largest = r;
+        //<i>If largest is not root</i>
+        if (largest != i) 
+        {
+            int temp = arr[i];
+            arr[i] = arr[largest];
+            arr[largest] = temp;
+            //<i>Recursively heapify the</i> 
+            //<i>affected sub-tree</i>
+            heapify(arr, N, largest);
+        }
     }
-                        
-  }
-}
-        </pre>
+
+//<i>Main function to do heap sort</i>
+    public static void heapSort(int arr[])
+    {
+        int N = arr.length;
+        //<i>Build heap (rearrange array)</i>
+        for (int i = N / 2 - 1; i >= 0; i--)
+            heapify(arr, N, i);
+        //<i>One by one extract an element from heap</i>
+        for (int i = N - 1; i > 0; i--) 
+        {
+            //<i>Move current root to end</i>
+            int temp = arr[0];
+            arr[0] = arr[i];
+            arr[i] = temp;
+    
+            //<i>call max heapify on the reduced heap</i>
+            heapify(arr, i, 0);
+        }
+    }
+    
+    // A utility function to print array of size n
+    public static void printArray(int arr[]) 
+    {
+        for (int i = 0; i &lt; arr.length; ++i)
+            System.out.print(arr[i] + " ");
+        System.out.println();
+    }
+    
+//<i>Driver's code</i>
+    public static void main(String args[]) 
+    {
+        int arr[] = { 12, 11, 13, 5, 6, 7 };
+        //<i>Function call</i>
+        heapSort(arr);
+        System.out.println("Sorted array is:");
+        printArray(arr);
+    }
+}</pre>
         </div></div>
         <div id="z1" style="padding-top: 15px" class="container">
           <div class="l"><b><u>Explanation:</u></b><br></div>
             <h6>We are explaining the C++ code,the logics are similar:</h6>
             <pre id="po">
-The provided code is a solution to reverse a portion of a vector named 'arr' based on a given position 'm'. Let's explain the logic behind this code:
+<b>1.</b> The code demonstrates the implementation of the Heap Sort algorithm, which is used to sort an array in ascending order.
 
-1. The function `reverseArray` takes two parameters: the vector `arr` (passed by reference) and the position `m`.
+<b>2.</b> The `heapify` function is used to maintain the heap property of a subtree rooted at index `i` within the array `arr` of size `N`. It compares the element at index `i` with its left and right children, and swaps elements to ensure the largest element is at the root.
+                
+<b>3.</b> The `heapSort` function builds the initial heap by calling `heapify` for each non-leaf node in a bottom-up manner. It starts from the last non-leaf node and continues up to the root.
+                
+<b>4.</b> After building the heap, the function performs the sorting process. It repeatedly swaps the root element (largest value) with the last unsorted element, reduces the size of the heap by one, and calls `heapify` on the reduced heap to restore the heap property.
+                
+<b>5.</b> The `printArray` function is a utility function that prints the elements of the array.
+                
+<b>6.</b> In the `main` function, an example array `arr` is defined, and the size `N` is calculated. The `heapSort` function is called to sort the array in-place. Finally, the sorted array is printed using the `printArray` function.
 
-2. The variable `a` is assigned the size of the vector, representing the total number of elements in the array.
-
-3. Two pointers `i` and `j` are initialized. The pointer `i` starts from `m + 1`, and the pointer `j` starts from the end of the array, which is `a - 1`.
-
-4. The while loop continues as long as `i` is less than `j`. This ensures that the portion of the vector after position `m` is reversed.
-
-5. Within the loop, the elements at positions `i` and `j` are swapped using a temporary variable `t`. This is done by storing the value of the element at position `i` in `t`,     assigning the value of the element at position `j` to the element at position `i`, and finally assigning the value stored in `t` to the element at position `j`.
-
-6. The pointers `i` and `j` are then updated by incrementing `i` and decrementing `j` to move towards the center of the portion being reversed.
-
-7. Once the loop finishes, the portion of the vector after position `m` is reversed.
-
-If the value of `m` is set to 0, the entire vector will be reversed. This is because `m + 1` will start from the second element, and reversing from that position until the end will effectively reverse the entire vector.
-
-This logic can be applied to vectors or array-like structures in any programming language. The specific syntax and data types may vary, but the underlying logic of swapping elements to reverse a portion of the vector remains the same.
-            </pre>
+Overall, the code demonstrates the steps involved in Heap Sort, including heap construction and sorting, to achieve an ascending order arrangement of the elements in the array.</pre>
           </div>
-     
+
       </div>
 
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
@@ -166,7 +306,7 @@ This logic can be applied to vectors or array-like structures in any programming
   @media (max-width:450px) {
     pre
     {
-      font-size:2.08vh;
+      font-size:2.19vh;
     }
     #z,h6,#z1
     {
@@ -174,6 +314,7 @@ This logic can be applied to vectors or array-like structures in any programming
     }
     
   }
+
   .l
   {
     font-size: 3.7vh;
@@ -183,6 +324,7 @@ This logic can be applied to vectors or array-like structures in any programming
   {
       font-size:2.5vh;
   }
+  
 }
       .y
       {
