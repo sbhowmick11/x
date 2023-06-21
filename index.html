@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HEAP SORT</title>
+    <title>QUICK SORT</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
 <body>
@@ -49,8 +49,7 @@
     
       <div id="z" style="padding-top: 15px" class="container">
         <div class="l" ><b><u>Problem Statement:</u></b> </div>
-         <h6>You are given a unsorted array. You must sort the array using heap sort algorithm with a time
-            complexity of O(nlogn).
+         <h6>You are given a unsorted array. You must sort the array using quick sort algorithm with an average time complexity of O(nlogn).It is not a stable sorting algprithm.
          </h6>
       </div>
       <div class="y">
@@ -58,70 +57,51 @@
         <h4>&nbsp;<u>C:</u></h4>
 <pre>
 #include &lt;stdio.h&gt;
-//<i>To heapify a subtree rooted with</i> 
-//<i>node i which is an index in arr[].</i>
-//<i>N is size of the heap</i>
-void heapify(int arr[], int N, int i)
+int getindex(int *arr,int low,int high)
 {
-    //<i>Initialize largest as root</i>
-    int largest = i;
-    //<i>left = 2*i +1</i>
-    int l = 2 * i + 1;
-    //<i>right = 2*i+2</i>
-    int r = 2 * i + 2;
-    //<i>If left child is larger than root</i>
-    if (l &lt; N && arr[l] > arr[largest])
-        largest = l;
-    //<i>If right child is larger</i> 
-    //<i>than largest so far</i>
-    if (r &lt; N && arr[r] > arr[largest])
-        largest = r;
-    //<i>If largest is not root</i>
-    if (largest != i)
+    int pivot=arr[high];    
+    //<i>taking last element as pivot</i>
+    int i=low-1;
+    for(int j=low;j&lt;high;j++)
     {
-        int temp = arr[i];
-        arr[i] = arr[largest];
-        arr[largest] = temp;
-        //<i>Recursively heapify the</i> 
-        //<i>affected sub-tree</i>
-        heapify(arr, N, largest);
+        if(arr[j]&lt;pivot)
+        {
+            i++;
+            //<i>swap</i>
+            int temp;
+            temp=arr[i];
+            arr[i]=arr[j];
+            arr[j]=temp;
+        }
+    }
+    //<i>swap with pivot</i>
+    i++;
+    int t;
+    t=arr[i];
+    arr[i]=arr[high];
+    arr[high]=t;
+    return i;
+}
+void quicksort(int *a,int low,int high)
+{
+    if(low&lt;high)
+    {
+        int pivot=getindex(a,low,high);
+        quicksort(a,low,pivot-1);
+        quicksort(a,pivot+1,high);
     }
 }
-//<i>Main function to do heap sort</i>
-void heapSort(int arr[], int N)
-{
-    //<i>Build heap (rearrange array)</i>
-    for (int i = N / 2 - 1; i >= 0; i--)
-        heapify(arr, N, i);
-    //<i>One by one extract an element</i> 
-    //<i>from heap</i>
-    for (int i = N - 1; i > 0; i--)
-    {
-        //<i>Move current root to end</i>
-        int temp = arr[0];
-        arr[0] = arr[i];
-        arr[i] = temp;
-        //<i>call max heapify on the</i> 
-        //<i>reduced heap</i>
-        heapify(arr, i, 0);
-    }
-}
-//<i>A utility function to print array of size n</i>
-void printArray(int arr[], int N)
-{
-    for (int i = 0; i < N; ++i)
-        printf("%d ", arr[i]);
-    printf("\n");
-}
-//<i>Driver's code</i>
 int main()
 {
-    int arr[] = { 12, 11, 13, 5, 6, 7 };
-    int N = sizeof(arr) / sizeof(arr[0]);
-    // Function call
-    heapSort(arr, N);
-    printf("Sorted array is:\n");
-    printArray(arr, N);
+    //<i>printf("Hello World");</i>
+    int a[]={6,5,4,30,2,1};int n;
+    n=sizeof(a)/sizeof(a[0]);
+    quicksort(a,0,n-1);
+    for(int i=0;i&lt;n;i++)
+    {
+        printf("%d ",a[i]);
+    }
+    return 0;
 }</pre>
         </div>
             
@@ -129,137 +109,116 @@ int main()
             <h4>&nbsp;<u>C++:</u></h4>
 <pre>
 #include &lt;iostream&gt;
+#include &lt;vector&gt;
 using namespace std;
-
-void heapify(int arr[], int N, int i)
+//<i>Function to swap two elements</i>
+void swap(int& a, int& b) 
 {
-    //<i>Initialize largest as root</i>
-    int largest = i;
-    //<i>left = 2*i +1</i>
-    int l = 2 * i+1;
-    //<i>right = 2*i+2</i>
-    int r = 2 * i + 2;
-    
-    //<i>If left child is larger than root</i>
-    if (l &lt; N && arr[l] > arr[largest])
-        largest = l;
-    
-    //<i>If right child is larger than largest</i>
-    //<i>so far</i>
-    if (r < N && arr[r] > arr[largest])
-        largest = r;
-    
-    //<i>If largest is not root</i>
-    if (largest != i) {
-        swap(arr[i], arr[largest]);
-    
-    //<i>Recursively heapify the affected</i>
-    //<i>sub-tree</i>
-    heapify(arr, N, largest);
-    }
+    int temp = a;  a = b;  b = temp;
 }
-//<i>Main function to do heap sort</i>
-void heapSort(int arr[], int N)
-{    
-    <i>// Build heap (rearrange array)</i>
-    for (int i = N / 2 - 1; i >= 0; i--)
-    heapify(arr, N, i);
     
-    //<i>One by one extract element from heap</i>
-    for (int i = N - 1; i > 0; i--) 
+//<i>Partition function to divide the array</i> 
+//<i>into two subarrays</i>
+int partition(vector<int>& arr,int low,int high) 
+{
+    int pivot = arr[high];    int i = low - 1;
+    for (int j = low; j &lt; high; j++) 
     {
-        //<i>Move current root to end</i>
-        swap(arr[0], arr[i]);
-        
-        //<i>call max heapify on the reduced heap</i>
-        
-        heapify(arr, i, 0);
+        if (arr[j] &lt; pivot) 
+        {
+            i++;
+            swap(arr[i], arr[j]);
+        }
+    }
+    swap(arr[i + 1], arr[high]);
+    return i + 1;
+}
+//<i>Quicksort function</i>
+void quickSort(vector<int>& arr, int low, int high)
+{
+    if (low &lt; high) 
+    {
+    //<i>Find the partition index</i>
+    int partitionIndex = partition(arr, low, high);
+    //<i>Recursively sort the two subarrays</i>
+    quickSort(arr, low, partitionIndex - 1);
+    quickSort(arr, partitionIndex + 1, high);
     }
 }
-//<i>A utility function to print array of size n</i>
-void printArray(int arr[], int N)
+//<i>Utility function to print the array</i>
+void printArray(const vector<int>& arr)
 {
-    for (int i = 0; i &lt; N; ++i)
+    for (int i = 0; i &lt; arr.size(); i++) 
+    {
         cout << arr[i] << " ";
-    cout << "\n";
+    }
+    cout << endl;
 }
-//<i>Driver's code</i>
 int main()
 {
-    int arr[] = { 12, 11, 13, 5, 6, 7 };
-    int N = sizeof(arr) / sizeof(arr[0]);
-    //<i>Function call</i>
-    heapSort(arr, N);
-    cout << "Sorted array is \n";
-    printArray(arr, N);
+    vector<int> arr = {5, 3, 8, 1, 2, 7};
+    int n = arr.size();
+    cout << "Original array: ";
+    printArray(arr);  quickSort(arr, 0, n - 1);
+    cout << "Sorted array: ";   printArray(arr);
+    return 0;
 }</pre>
         </div>
         <div class="a">
             <h4>&nbsp;<u>JAVA:</u></h4>
 <pre>import java.util.Arrays;
-public class HeapSort 
+public class QuickSort 
 {
-    //<i>To heapify a subtree rooted with node i</i>
-    //<i>which is an index in arr[].</i>
-    //<i>N is size of heap</i>
-   public static void heapify(int arr[], int N, int i) 
-   {
-        int largest = i;//<i>Initialize largest as root</i>
-        int l = 2 * i + 1; //<i>left = 2*i + 1</i>
-        int r = 2 * i + 2;//<i>right = 2*i + 2</i>
-        //<i>If left child is larger than root</i>
-         if (l &lt; N && arr[l] > arr[largest])
-            largest = l;
-        //<i>If right child is larger than largest so far</i>
-        if (r &lt; N && arr[r] > arr[largest])
-            largest = r;
-        //<i>If largest is not root</i>
-        if (largest != i) 
+    //<i>Function to swap two elements</i>
+    public static void swap(int[] arr, int i, int j) 
+    {
+        int temp = arr[i];  arr[i] = arr[j];
+        arr[j] = temp;
+    }
+    //<i>Partition function to divide the array</i>
+    //<i>into two subarrays</i>
+    public static int partition(int[] arr, int low, int high)
+    {
+        int pivot = arr[high];  int i = low - 1;
+        for (int j = low; j &lt; high; j++)
         {
-            int temp = arr[i];
-            arr[i] = arr[largest];
-            arr[largest] = temp;
-            //<i>Recursively heapify the</i> 
-            //<i>affected sub-tree</i>
-            heapify(arr, N, largest);
+            if (arr[j] &lt; pivot) 
+            {
+                i++;  swap(arr, i, j);
+            }
+        }
+        swap(arr, i + 1, high);   return i + 1;
+    }
+        
+    //<i>Quicksort function</i>
+    public static void quickSort(int[] arr,int low,int high)
+    {
+        if (low &lt; high)
+        {
+            //<i>Find the partition index</i>
+            int partitionIndex = partition(arr, low, high);
+            //<i>Recursively sort the two subarrays</i>
+            quickSort(arr, low, partitionIndex - 1);
+            quickSort(arr, partitionIndex + 1, high);
         }
     }
-
-//<i>Main function to do heap sort</i>
-    public static void heapSort(int arr[])
+    //<i>Utility function to print the array</i>
+    public static void printArray(int[] arr) 
     {
-        int N = arr.length;
-        //<i>Build heap (rearrange array)</i>
-        for (int i = N / 2 - 1; i >= 0; i--)
-            heapify(arr, N, i);
-        //<i>One by one extract an element from heap</i>
-        for (int i = N - 1; i > 0; i--) 
+        for (int i = 0; i &lt; arr.length; i++)
         {
-            //<i>Move current root to end</i>
-            int temp = arr[0];
-            arr[0] = arr[i];
-            arr[i] = temp;
-    
-            //<i>call max heapify on the reduced heap</i>
-            heapify(arr, i, 0);
-        }
-    }
-    
-    // A utility function to print array of size n
-    public static void printArray(int arr[]) 
-    {
-        for (int i = 0; i &lt; arr.length; ++i)
             System.out.print(arr[i] + " ");
+        }
         System.out.println();
     }
-    
-//<i>Driver's code</i>
-    public static void main(String args[]) 
+        
+    public static void main(String[] args)
     {
-        int arr[] = { 12, 11, 13, 5, 6, 7 };
-        //<i>Function call</i>
-        heapSort(arr);
-        System.out.println("Sorted array is:");
+        int[] arr = {5, 3, 8, 1, 2, 7};
+        System.out.println("Original array: ");
+        printArray(arr);
+        quickSort(arr, 0, arr.length - 1);
+        System.out.println("Sorted array: ");
         printArray(arr);
     }
 }</pre>
@@ -268,19 +227,23 @@ public class HeapSort
           <div class="l"><b><u>Explanation:</u></b><br></div>
             <h6>We are explaining the C++ code,the logics are similar:</h6>
             <pre id="po">
-<b>1.</b> The code demonstrates the implementation of the Heap Sort algorithm, which is used to sort an array in ascending order.
+<b>1.</b> The code begins by including the necessary libraries: iostream for input/output operations and vector for using a dynamic array.
+<b>2.</b> The swap function is defined to swap the values of two integers using a temporary variable.
+<b>3.</b> The partition function is defined to divide the array into two subarrays based on a chosen pivot element. It takes three parameters: the array arr, the low index low, and the high index high that specify the range of the array to be partitioned.
+<b>4.</b> Inside the partition function, the pivot element is chosen as the last element of the subarray (arr[high]). The variable i is initialized to low - 1, which represents the index of the smaller element.
+<b>5.</b> A loop is executed from low to high - 1 to compare each element with the pivot element. If an element is smaller than the pivot, i is incremented, and the swap function is called to swap the current element with the element at index i.
+<b>6.</b> After the loop, the pivot element is placed in its correct sorted position by swapping it with the element at index i + 1.
+<b>7.</b> The partition function returns the index of the pivot element in its sorted position.
+<b>8.</b> The quickSort function is defined to recursively sort the subarrays. It takes three parameters: the array arr, the low index low, and the high index high that specify the range of the array to be sorted.
+<b>9.</b> Inside the quickSort function, an if condition is checked to ensure that low is less than high. If it is true, the partition index is obtained by calling the partition function.
+<b>10.</b> The quickSort function is then called recursively twice to sort the two subarrays: one from low to partitionIndex - 1 and the other from partitionIndex + 1 to high.
+<b>11.</b> The printArray function is defined to print the elements of the array. It takes the array arr as a parameter and prints each element separated by a space.
+<b>12.</b> In the main function, an example array arr is initialized with values {5, 3, 8, 1, 2, 7}.
+<b>13.</b> The original array is printed using the printArray function.
+<b>14.</b> The quickSort function is called to sort the array in place.
+<b>15.</b> Finally, the sorted array is printed using the printArray function.
 
-<b>2.</b> The `heapify` function is used to maintain the heap property of a subtree rooted at index `i` within the array `arr` of size `N`. It compares the element at index `i` with its left and right children, and swaps elements to ensure the largest element is at the root.
-                
-<b>3.</b> The `heapSort` function builds the initial heap by calling `heapify` for each non-leaf node in a bottom-up manner. It starts from the last non-leaf node and continues up to the root.
-                
-<b>4.</b> After building the heap, the function performs the sorting process. It repeatedly swaps the root element (largest value) with the last unsorted element, reduces the size of the heap by one, and calls `heapify` on the reduced heap to restore the heap property.
-                
-<b>5.</b> The `printArray` function is a utility function that prints the elements of the array.
-                
-<b>6.</b> In the `main` function, an example array `arr` is defined, and the size `N` is calculated. The `heapSort` function is called to sort the array in-place. Finally, the sorted array is printed using the `printArray` function.
-
-Overall, the code demonstrates the steps involved in Heap Sort, including heap construction and sorting, to achieve an ascending order arrangement of the elements in the array.</pre>
+The code follows a divide-and-conquer approach by recursively partitioning the array into smaller subarrays and sorting them separately. The choice of the pivot element and its placement in the correct position is crucial for the efficiency of the algorithm. Quicksort has an average-case time complexity of O(n log n) and a worst-case time complexity of O(n^2) when the pivot selection is not optimal.</pre>
           </div>
 
       </div>
